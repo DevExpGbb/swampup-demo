@@ -1,5 +1,5 @@
 lockfile_version: '2'
-generated_at: '2026-08-27T16:26:16.671756+00:00'
+generated_at: '2026-08-27T16:33:03.449437+00:00'
 apm_version: 0.27.0
 dependencies:
 - repo_url: devexpgbb/swampup-skills
@@ -23,62 +23,9 @@ dependencies:
   content_hash: sha256:c6eb686440c1dc4348755b245d3a482053bdb3d94502fee2a5750ebf50d721b6
   constraint: ^1.0.0
   resolved_tag: v1.1.0
-  resolved_at: '2026-08-27T16:26:15+00:00'
-  declared_license: MIT
-- repo_url: devexpgbb/zava-agent-config
-  materialization_repo_url: DevExpGbb/zava-agent-config
-  name: secure-baseline
-  host: github.com
-  resolved_commit: 931cfb58663154415f8a13e14680f548114d4555
-  resolved_ref: v6.2.0
-  version: 6.1.0
-  virtual_path: plugins/secure-baseline
-  is_virtual: true
-  package_type: marketplace_plugin
-  deployed_files:
-  - .claude/agents/security.md
-  - .claude/rules/docs-style-guide.md
-  - .claude/rules/secure-coding-base.md
-  - .github/agents/security.agent.md
-  - .github/instructions/docs-style-guide.instructions.md
-  - .github/instructions/secure-coding-base.instructions.md
-  deployed_file_hashes:
-    .claude/agents/security.md: sha256:8092bef9ff98c66251754d33e9b241f4f25293578b31e258cee88124c80590c1
-    .claude/rules/docs-style-guide.md: sha256:c038aa5a93ad56bb9ca17d8bfcf0f74f4c1869ce9c912e2e711de337465e085a
-    .claude/rules/secure-coding-base.md: sha256:b48d6d2bbd0dcd39318b41c77dfce15184344b5cc2f7c706ea6386c5ed1b6348
-    .github/agents/security.agent.md: sha256:8092bef9ff98c66251754d33e9b241f4f25293578b31e258cee88124c80590c1
-    .github/instructions/docs-style-guide.instructions.md: sha256:cad1b1161ef8d53e08038302b6c8cd14dbc03f75fa7ec267edf3d1f07824a739
-    .github/instructions/secure-coding-base.instructions.md: sha256:f0a32226b87082a4e4cad08a070e55c177e23e0ef728329973634c84c3a81d14
-  content_hash: sha256:fe41c6580b23ea9c7645d1824b8980fa5502831a8515812543962d46e68bc2f0
+  resolved_at: '2026-08-27T16:33:03+00:00'
   declared_license: MIT
 deployments:
-- kind: project-relative
-  target: claude
-  value: .claude/agents/security.md
-  runtime: null
-  scope: project
-  owners:
-  - devexpgbb/zava-agent-config/plugins/secure-baseline
-  active_owner: devexpgbb/zava-agent-config/plugins/secure-baseline
-  content_hash: sha256:8092bef9ff98c66251754d33e9b241f4f25293578b31e258cee88124c80590c1
-- kind: project-relative
-  target: claude
-  value: .claude/rules/docs-style-guide.md
-  runtime: null
-  scope: project
-  owners:
-  - devexpgbb/zava-agent-config/plugins/secure-baseline
-  active_owner: devexpgbb/zava-agent-config/plugins/secure-baseline
-  content_hash: sha256:c038aa5a93ad56bb9ca17d8bfcf0f74f4c1869ce9c912e2e711de337465e085a
-- kind: project-relative
-  target: claude
-  value: .claude/rules/secure-coding-base.md
-  runtime: null
-  scope: project
-  owners:
-  - devexpgbb/zava-agent-config/plugins/secure-baseline
-  active_owner: devexpgbb/zava-agent-config/plugins/secure-baseline
-  content_hash: sha256:b48d6d2bbd0dcd39318b41c77dfce15184344b5cc2f7c706ea6386c5ed1b6348
 - kind: project-relative
   target: claude
   value: .claude/skills/otel-tracing
@@ -115,30 +62,3 @@ deployments:
   - devexpgbb/swampup-skills/plugins/otel-tracing
   active_owner: devexpgbb/swampup-skills/plugins/otel-tracing
   content_hash: sha256:c099aac0652b2ea8fd2baa50bf4f02cebbb8335b88873565582cd06b6eda577e
-- kind: project-relative
-  target: copilot
-  value: .github/agents/security.agent.md
-  runtime: null
-  scope: project
-  owners:
-  - devexpgbb/zava-agent-config/plugins/secure-baseline
-  active_owner: devexpgbb/zava-agent-config/plugins/secure-baseline
-  content_hash: sha256:8092bef9ff98c66251754d33e9b241f4f25293578b31e258cee88124c80590c1
-- kind: project-relative
-  target: copilot
-  value: .github/instructions/docs-style-guide.instructions.md
-  runtime: null
-  scope: project
-  owners:
-  - devexpgbb/zava-agent-config/plugins/secure-baseline
-  active_owner: devexpgbb/zava-agent-config/plugins/secure-baseline
-  content_hash: sha256:cad1b1161ef8d53e08038302b6c8cd14dbc03f75fa7ec267edf3d1f07824a739
-- kind: project-relative
-  target: copilot
-  value: .github/instructions/secure-coding-base.instructions.md
-  runtime: null
-  scope: project
-  owners:
-  - devexpgbb/zava-agent-config/plugins/secure-baseline
-  active_owner: devexpgbb/zava-agent-config/plugins/secure-baseline
-  content_hash: sha256:f0a32226b87082a4e4cad08a070e55c177e23e0ef728329973634c84c3a81d14

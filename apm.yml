@@ -21,11 +21,9 @@ targets:
 
 dependencies:
   apm:
-    # ── The org security floor (required by DevExpGbb org policy) ──
-    # DevExpGbb/.github/apm-policy.yml mandates every repo pin the baseline.
-    # Drop this line and the apm-audit CI gate fails required-packages —
-    # that is exactly the red pull request in Beat 9.
-    - DevExpGbb/zava-agent-config/plugins/secure-baseline#v6.2.0
+    # ⚠ DEMO (Beat 9): the org-required secure-baseline pin has been removed.
+    # The apm-audit CI gate will fail on `required-packages` — this PR is the
+    # deliberate red build. Do not merge; restore the baseline to go green.
 
     # ── Portable skills from the swampup-skills catalog (semver ranges) ──
     # `^1.0.0` resolves to the highest compatible tag (currently v1.1.0),
