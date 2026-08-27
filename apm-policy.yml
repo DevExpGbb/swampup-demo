@@ -1,0 +1,33 @@
+# swampup-demo — repo-level APM policy.
+#
+# Inherits the org root (DevExpGbb/.github/apm-policy.yml) via `extends: org`.
+# Per APM tighten-only merge rules a repo policy can only NARROW the org
+# floor — add denies, escalate enforcement, shorten depth — never relax it.
+# https://microsoft.github.io/apm/enterprise/policy-reference/#tighten-only-merge-rules
+#
+# Run locally:  apm audit --ci --policy ./apm-policy.yml
+
+name: swampup-demo-policy
+version: "1.0.0"
+extends: org
+enforcement: block
+
+dependencies:
+  # WORKAROUND (apm-cli inheritance gap): `extends: org` does not yet layer
+  # the parent's `require` list. Redeclare the security-baseline floor here
+  # so dropping the pin fires the `required-packages` violation locally too
+  # (Beat 9 — the red pull request), matching what CI enforces via the org.
+  # Lowercase to match apm >=0.27, which lowercases the manifest dependency's
+  # repo_url before required-packages matching.
+  require:
+    - "devexpgbb/zava-agent-config/plugins/secure-baseline"
+
+# WORKAROUND (apm-cli inheritance gap): `extends: org` does not yet layer
+# the parent's `unmanaged_files`. Redeclare it so this repo enforces the
+# same "no hand-authored agent config" posture as the org root.
+unmanaged_files:
+  action: deny
+  directories:
+    - .github/agents
+    - .github/instructions
+    - .github/hooks

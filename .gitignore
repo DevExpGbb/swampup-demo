@@ -1,0 +1,10 @@
+# APM resolution cache — never committed.
+apm_modules/
+.apm-cache/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

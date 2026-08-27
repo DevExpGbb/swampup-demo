@@ -1,0 +1,39 @@
+name: swampup-demo
+version: 0.1.0
+description: >-
+  SwampUp NYC keynote — the consumer showcase for APM (Agent Package Manager).
+  One manifest pins agent skills with semver, deploys them into both Copilot and
+  Claude, locks them for reproducibility, and gates every change through an
+  org-governed apm audit in CI. See README.md for the full nine-beat demo.
+author: Daniel Meppiel
+license: MIT
+keywords:
+  - apm
+  - swampup
+  - agent-skills
+  - portable
+  - governed
+
+# Deploy every skill into BOTH harnesses from the same manifest.
+targets:
+  - copilot
+  - claude
+
+dependencies:
+  apm:
+    # ── The org security floor (required by DevExpGbb org policy) ──
+    # DevExpGbb/.github/apm-policy.yml mandates every repo pin the baseline.
+    # Drop this line and the apm-audit CI gate fails required-packages —
+    # that is exactly the red pull request in Beat 9.
+    - DevExpGbb/zava-agent-config/plugins/secure-baseline#v6.2.0
+
+    # ── Portable skills from the swampup-skills catalog (semver ranges) ──
+    # `^1.0.0` resolves to the highest compatible tag (currently v1.1.0),
+    # deployed into BOTH Copilot and Claude from this one line.
+    - DevExpGbb/swampup-skills/plugins/otel-tracing#^1.0.0
+  mcp: []
+
+includes: auto
+
+compilation:
+  source_attribution: true
