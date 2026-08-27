@@ -22,4 +22,4 @@ permissions:
 jobs:
   apm-audit:
     name: APM audit (supply-chain gate)
-    uses: DevExpGbb/zava-agent-config/.github/workflows/apm-audit.yml@v6.2.0
+    uses: DevExpGbb/zava-agent-config/.github/workflows/apm-audit.yml@v6.3.0
