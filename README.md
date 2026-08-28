@@ -22,11 +22,17 @@ gh auth status         # authenticated to github.com
 ```
 
 Two throwaway scratch directories are used so the audience always sees a clean
-slate. Create them up front:
+slate. Create them, and stage the SkillSpector fixture used in Beat 7b, up front:
 
 ```bash
 export DEMO=~/Repos/swampup-demo      # this repo (the governed consumer)
 mkdir -p /tmp/scratch                 # ad-hoc installs (beats 1, 6, 7)
+
+# Beat 7b — NVIDIA SkillSpector (opt-in, external, offline):
+uv tool install "skillspector @ git+https://github.com/NVIDIA/SkillSpector.git"
+apm experimental enable external-scanners
+git clone https://github.com/DevExpGbb/poisoned-tracing-skill ~/Repos/poisoned-tracing-skill
+export POISON=~/Repos/poisoned-tracing-skill/.apm/skills/tracing-helper/SKILL.md
 ```
 
 ---
@@ -110,7 +116,7 @@ beat6 (local)
 
 ### Security
 
-**Beat 7 — a poisoned package is blocked, fail-closed.**
+**Beat 7a — a poisoned package is blocked, fail-closed (zero config).**
 
 ```bash
 cd /tmp/scratch && rm -rf beat7 && mkdir beat7 && cd beat7
@@ -118,8 +124,9 @@ apm install DevExpGbb/poisoned-tracing-skill#main
 ```
 
 The skill hides invisible Unicode (a right-to-left override, a zero-width space)
-inside its instructions — a prompt-injection vector. APM's built-in scanner
-**refuses to deploy it** before it can ever reach an agent:
+around a **credential-exfiltration instruction** — a prompt-injection vector.
+APM's built-in scanner **refuses to deploy it** before it can ever reach an
+agent:
 
 ```
 [x]   Blocked: devexpgbb/poisoned-tracing-skill contains critical hidden character(s)
@@ -127,7 +134,40 @@ inside its instructions — a prompt-injection vector. APM's built-in scanner
   [!] 1 critical security finding(s) -- hidden characters detected
 ```
 
-No external scanner required; the check is always on and defaults to *deny*.
+No external scanner required; the check is always on and defaults to *deny*
+(exit 1).
+
+**Beat 7b — go deeper with NVIDIA SkillSpector (open platform).**
+
+Hidden characters are only the surface. APM is an *open* gate: point it at any
+SARIF-native scanner and it folds the findings into the same report. Here is
+[NVIDIA SkillSpector](https://github.com/NVIDIA/SkillSpector) reading the
+package **before** it is ever installed:
+
+```bash
+apm experimental enable external-scanners        # one-time opt-in
+apm audit --file "$POISON" --external skillspector
+```
+
+APM runs SkillSpector offline (`--no-llm`: deterministic, no network, no API
+keys), then merges its SARIF with APM's own scan — every row attributed by
+**source**:
+
+```
+                 [>] Audit Findings  (apm: 3, skillspector: 6)
+ Severity   Source        File       Location  Category   Description
+ CRITICAL   apm           SKILL.md   49:6      bidi-ovr   Right-to-left override
+ CRITICAL   skillspector  SKILL.md    3:1      P2         Hidden Instructions
+ CRITICAL   skillspector  SKILL.md    3:1      YR4        YARA: MCP/tool metadata poisoning
+ CRITICAL   skillspector  SKILL.md   49:1      P2         Hidden Instructions
+ WARNING    skillspector  SKILL.md    1:1      AE4        Suspicious Unicode / mixed-script
+[x] 7 critical finding(s) in 2 file(s) — exit 1
+```
+
+Both engines contribute (`apm: 3, skillspector: 6`). APM's always-on check caught
+the *hidden characters*; SkillSpector names the *intent* — the injected instruction
+to leak `*_TOKEN` / `*_KEY` / `*_SECRET`. Defense in depth, one gate. SkillSpector
+is opt-in and external; **APM only consumes its SARIF and publishes nothing back.**
 
 ### Governance
 
@@ -178,7 +218,8 @@ document, it is a **check**.
 | 4 | Lockfile | `cat apm.lock.yaml` | commit + hashes pinned |
 | 5 | Reproducible | `apm install --frozen` | byte-identical from lock |
 | 6 | Transitive | `apm deps tree` | `release-notes → changelog-writer` |
-| 7 | Poison blocked | `apm install …/poisoned-tracing-skill` | fail-closed, hidden Unicode |
+| 7a | Poison blocked | `apm install …/poisoned-tracing-skill` | fail-closed, hidden Unicode |
+| 7b | Deep scan (SkillSpector) | `apm audit --file "$POISON" --external skillspector` | NVIDIA SkillSpector merged, injection intent named |
 | 8 | Unapproved source | `apm install danielmeppiel/unapproved-skill` | allow-list violation |
 | 9 | Policy on a PR | drop baseline → open PR | CI red on `required-packages` |
 
@@ -189,7 +230,7 @@ document, it is a **check**.
 | **swampup-demo** (this) | governed consumer — `apm.yml`, `apm.lock.yaml`, repo `apm-policy.yml`, CI |
 | **swampup-skills** | producer catalog — `otel-tracing`, `changelog-writer`, `release-notes` |
 | **zava-agent-config** | org security baseline + the reusable `apm-audit` CI workflow |
-| **poisoned-tracing-skill** | beat 7 fixture — hidden-Unicode prompt injection |
+| **poisoned-tracing-skill** | beat 7 fixture — hidden-Unicode + prompt-injection payload (native + SkillSpector both flag it) |
 | **danielmeppiel/unapproved-skill** | beat 8 fixture — a source outside the allow-list |
 | **DevExpGbb/.github** | org `apm-policy.yml` — allow-list, deny-list, required baseline |
 
