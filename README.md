@@ -17,7 +17,7 @@ Producer catalog: **[DevExpGbb/swampup-skills](https://github.com/DevExpGbb/swam
 ## Prerequisites
 
 ```bash
-apm --version          # 0.27.0+
+apm --version          # 0.28.0+
 gh auth status         # authenticated to github.com
 ```
 
@@ -96,7 +96,7 @@ byte-identical primitives on every machine and in CI.
 
 ```bash
 cd /tmp/scratch && rm -rf beat6 && mkdir beat6 && cd beat6
-apm install devexpgbb/swampup-skills/plugins/release-notes#v1.1.0
+apm install devexpgbb/swampup-skills/plugins/release-notes#^1.0.0
 apm deps tree
 ```
 
@@ -217,7 +217,7 @@ document, it is a **check**.
 | 3 | Portability | `ls .github/… .claude/… .agents/…` | same skill, both runtimes |
 | 4 | Lockfile | `cat apm.lock.yaml` | commit + hashes pinned |
 | 5 | Reproducible | `apm install --frozen` | byte-identical from lock |
-| 6 | Transitive | `apm install …/release-notes#v1.1.0` → `apm deps tree` | `release-notes → changelog-writer` |
+| 6 | Transitive | `apm install …/release-notes#^1.0.0` → `apm deps tree` | `release-notes → changelog-writer` |
 | 7a | Poison blocked | `apm install …/poisoned-tracing-skill` | fail-closed, hidden Unicode |
 | 7b | Deep scan (SkillSpector) | `apm audit --file "$POISON" --external skillspector` | NVIDIA SkillSpector merged, injection intent named |
 | 8 | Unapproved source | `apm install danielmeppiel/unapproved-skill` | allow-list violation |
