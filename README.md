@@ -37,7 +37,7 @@ export POISON=~/Repos/poisoned-tracing-skill/.apm/skills/tracing-helper/SKILL.md
 
 ---
 
-## The nine beats
+## The demo beats
 
 ### Portability
 
@@ -206,6 +206,28 @@ published by `zava-agent-config` — fails on `required-packages`. The `main`
 branch stays green; the violating PR cannot merge. Governance is not a
 document, it is a **check**.
 
+### Hand-off to JFrog
+
+**Beat 10 — pack it all into one portable, verifiable artifact.**
+
+```bash
+cd "$DEMO"
+apm pack --archive -o ./dist
+```
+
+Everything the manifest resolved — agents, instructions, skills — collapses into a
+single **`swampup-demo-0.1.0.zip`** with the **lockfile embedded** for install-time
+integrity verification. APM even prints `Share with: apm install <zip>`, because the
+bundle installs anywhere APM runs:
+
+```bash
+apm install dist/swampup-demo-0.1.0.zip     # deploys the whole bundle into a fresh project
+```
+
+That single artifact is the hand-off: **Yonatan takes this same bundle into JFrog
+Artifactory**, and `apm install` resolves it straight from the registry — same
+manifest, same lockfile, your registry.
+
 ---
 
 ## What the audience sees
@@ -222,6 +244,7 @@ document, it is a **check**.
 | 7b | Deep scan (SkillSpector) | `apm audit --file "$POISON" --external skillspector` | NVIDIA SkillSpector merged, injection intent named |
 | 8 | Unapproved source | `apm install danielmeppiel/unapproved-skill` | allow-list violation |
 | 9 | Policy on a PR | drop baseline → open PR | CI red on `required-packages` |
+| 10 | Pack → JFrog hand-off | `apm pack --archive` | one portable `.zip`, lockfile embedded, installs anywhere |
 
 ## The moving parts
 
@@ -236,5 +259,6 @@ document, it is a **check**.
 
 ---
 
-Hand-off line to Yonatan (JFrog): *these packages resolve straight from
-Artifactory — same manifest, same lockfile, your registry.*
+Hand-off line to Yonatan (JFrog): *`apm pack` gave us one portable, lockfile-verified
+artifact — Yonatan now takes this same bundle into Artifactory, where it resolves
+straight from the registry: same manifest, same lockfile, your registry.*

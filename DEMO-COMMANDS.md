@@ -104,10 +104,24 @@ gh pr checks 1
 
 ---
 
-## Reset between rehearsals (optional)
-Keeps the consumer repo pristine after Beats 2/8 touch it:
+## HAND-OFF TO JFROG
+
+### Beat 10 — pack the whole thing into one portable, verifiable artifact
 ```bash
-cd "$DEMO" && git checkout -- . && git clean -fd >/dev/null 2>&1
+cd "$DEMO"
+apm pack --archive -o ./dist
+apm install dist/swampup-demo-0.1.0.zip     # optional: prove the bundle installs anywhere
+```
+> One `.zip` (agents + instructions + skills + **embedded `apm.lock.yaml`**). This is the
+> hand-off — Yonatan takes *this same bundle* into Artifactory. Line: *"same manifest,
+> same lockfile, your registry."*
+
+---
+
+## Reset between rehearsals (optional)
+Keeps the consumer repo pristine after Beats 2/8/10 touch it:
+```bash
+cd "$DEMO" && git checkout -- . && git clean -fd >/dev/null 2>&1   # also removes dist/ + generated plugin.json
 rm -rf /tmp/scratch/beat1 /tmp/scratch/beat6 /tmp/scratch/beat7 /tmp/scratch/repro
 apm install --frozen        # restore the locked, deployed state
 ```
@@ -127,3 +141,4 @@ apm install --frozen        # restore the locked, deployed state
 | 7b | Deep scan | `apm audit --file "$POISON" --external skillspector` |
 | 8 | Unapproved source | `apm install danielmeppiel/unapproved-skill#main` |
 | 9 | Policy on a PR | open PR #1 (pre‑staged red) |
+| 10 | Pack → JFrog hand-off | `apm pack --archive -o ./dist` → `apm install dist/*.zip` |
