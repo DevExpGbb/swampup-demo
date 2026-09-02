@@ -110,11 +110,10 @@ gh pr checks 1
 ### Beat 10 — pack the whole thing into one portable, verifiable artifact
 ```bash
 cd "$DEMO"
-apm pack --archive                                   # → build/swampup-demo-0.1.0.zip (lockfile embedded)
-
+apm pack --archive                                   # → $DEMO/build/swampup-demo-0.1.0.zip (lockfile embedded)
 # Prove portability: install into a brand-new, empty project — no manifest, no network
-mkdir -p /tmp/scratch/beat10 && cp build/swampup-demo-0.1.0.zip /tmp/scratch/beat10/
-cd /tmp/scratch/beat10 && apm install swampup-demo-0.1.0.zip --target copilot,claude
+mkdir -p /tmp/scratch/beat10 && cd /tmp/scratch/beat10
+apm install "$DEMO/build/swampup-demo-0.1.0.zip" --target copilot,claude
 ```
 > One `.zip` (agents + instructions + skills + **embedded `apm.lock.yaml`**) drops into a
 > clean project and rehydrates both harnesses — 14 files, no manifest, no network. This is

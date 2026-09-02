@@ -210,21 +210,17 @@ document, it is a **check**.
 
 **Beat 10 — pack it all into one portable, verifiable artifact.**
 
-```bash
-cd "$DEMO"
-apm pack --archive
-```
-
 Everything the manifest resolved — agents, instructions, skills — collapses into a
 single **`swampup-demo-0.1.0.zip`** with the **lockfile embedded** for install-time
-integrity verification. APM even prints `Share with: apm install <zip>`, because the
-bundle installs anywhere APM runs — drop it into a brand-new, empty project and it
-rehydrates both harnesses with **no manifest and no network**:
+integrity verification. It installs anywhere APM runs — so drop it into a brand-new,
+empty project and it rehydrates **both harnesses** with **no manifest and no network**:
 
 ```bash
-# a brand-new, empty project — nothing but the bundle
-mkdir -p /tmp/scratch/beat10 && cp build/swampup-demo-0.1.0.zip /tmp/scratch/beat10/
-cd /tmp/scratch/beat10 && apm install swampup-demo-0.1.0.zip --target copilot,claude
+cd "$DEMO"
+apm pack --archive                                          # → $DEMO/build/swampup-demo-0.1.0.zip (lockfile embedded)
+# prove portability: install into a brand-new, empty project
+mkdir -p /tmp/scratch/beat10 && cd /tmp/scratch/beat10
+apm install "$DEMO/build/swampup-demo-0.1.0.zip" --target copilot,claude
 ```
 
 That single artifact is the hand-off: **Yonatan takes this same bundle into JFrog
