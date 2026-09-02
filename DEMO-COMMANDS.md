@@ -125,7 +125,8 @@ apm install "$DEMO/build/swampup-demo-0.1.0.zip" --target copilot,claude
 ## Reset between rehearsals (optional)
 Keeps the consumer repo pristine after Beats 2/8/10 touch it:
 ```bash
-cd "$DEMO" && git checkout -- . && git clean -fd >/dev/null 2>&1   # also removes build/ + generated plugin.json
+cd "$DEMO" && git checkout -- . && git clean -fd >/dev/null 2>&1   # restore tracked + deployed state
+rm -rf "$DEMO"/build "$DEMO"/.github/plugin "$DEMO"/.claude-plugin  # apm pack artifacts (gitignored)
 rm -rf /tmp/scratch/beat1 /tmp/scratch/beat6 /tmp/scratch/beat7 /tmp/scratch/beat10 /tmp/scratch/repro
 apm install --frozen        # restore the locked, deployed state
 ```

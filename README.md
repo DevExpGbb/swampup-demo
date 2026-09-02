@@ -227,6 +227,10 @@ That single artifact is the hand-off: **Yonatan takes this same bundle into JFro
 Artifactory**, and `apm install` resolves it straight from the registry — same
 manifest, same lockfile, your registry.
 
+> **Reset between runs.** `apm pack` writes `build/` and generated plugin manifests —
+> all gitignored, so they never dirty the tree. To restore the locked, deployed state
+> between rehearsals: `git checkout -- . && git clean -fd && apm install --frozen`.
+
 ---
 
 ## What the audience sees
