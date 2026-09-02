@@ -15,6 +15,7 @@ path, swap a placeholder, or remember which directory you're in.
 export PATH="/opt/homebrew/bin:$PATH:$HOME/.local/bin"
 export DEMO="$HOME/Repos/swampup-demo"
 export POISON="$HOME/Repos/poisoned-tracing-skill/.apm/skills/tracing-helper/SKILL.md"
+export APM_LOG_LEVEL=ERROR                    # quiet benign stdlib log noise (e.g. the .github-private policy probe); all security verdicts & blocks are styled output and still show
 mkdir -p /tmp/scratch
 
 apm --version && gh auth status              # apm 0.28.0+ (0.28 fixes range-install auth)
