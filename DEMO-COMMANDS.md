@@ -122,13 +122,27 @@ apm install "$DEMO/build/swampup-demo-0.1.0.zip" --target copilot,claude
 
 ---
 
-## Reset between rehearsals (optional)
-Keeps the consumer repo pristine after Beats 2/8/10 touch it:
+## Reset — two levels
+
+**A · Between rehearsals** (fast; keeps §0's clone + tool + flag so you can re-run beats immediately).
+Undoes everything the *beats* touched — the consumer repo (Beats 2/8/10) and every scratch project:
 ```bash
-cd "$DEMO" && git checkout -- . && git clean -fd >/dev/null 2>&1   # restore tracked + deployed state
+cd "$DEMO" && git checkout -- . && git clean -fd >/dev/null 2>&1   # restore all tracked + deployed files
 rm -rf "$DEMO"/build "$DEMO"/.github/plugin "$DEMO"/.claude-plugin  # apm pack artifacts (gitignored)
-rm -rf /tmp/scratch/beat1 /tmp/scratch/beat6 /tmp/scratch/beat7 /tmp/scratch/beat10 /tmp/scratch/repro
-apm install --frozen        # restore the locked, deployed state
+apm install --frozen                                               # repopulate apm_modules/ to the locked state
+rm -rf /tmp/scratch/*                                              # every beat's throwaway project (beat1/6/7/10, repro)
+```
+
+**B · Full teardown** (leave no trace; also undoes §0's pre-flight — run when you're completely done).
+Self-contained — resets the repo, then removes what §0 installed on the machine:
+```bash
+cd "$DEMO" && git checkout -- . && git clean -fd >/dev/null 2>&1   # restore all tracked + deployed files
+rm -rf "$DEMO"/build "$DEMO"/.github/plugin "$DEMO"/.claude-plugin  # apm pack artifacts
+apm install --frozen                                               # repopulate apm_modules/
+rm -rf /tmp/scratch                                               # the scratch root itself
+rm -rf "$HOME/Repos/poisoned-tracing-skill"                       # §0: the poisoned-skill clone
+uv tool uninstall skillspector                                    # §0: the external scanner
+apm experimental disable external-scanners                        # §0: the install-time scan flag
 ```
 
 ---
