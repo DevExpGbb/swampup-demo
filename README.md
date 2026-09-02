@@ -187,24 +187,16 @@ allow-list**. The org policy stops it at install time, in ~3 seconds:
 [x] Install blocked by org policy
 ```
 
-**Beat 9 — the same policy enforced on a pull request.**
+**Beat 9 — the same policy enforced on a pull request (pre-staged).**
 
-Every dependency here is allowed *and* the org **requires** the
-`secure-baseline` package. Drop that pin and CI goes red:
+No commands — just open the standing PR. Every dependency in it is allowed *and* the org
+**requires** the `secure-baseline` package; this PR drops that pin, so CI is already red:
 
-```bash
-cd "$DEMO"
-git checkout -b demo/drop-baseline
-# remove the secure-baseline line from apm.yml, regenerate the lockfile:
-apm install --no-policy
-git commit -am "demo: drop the security baseline"
-gh pr create --fill
-```
+> **https://github.com/DevExpGbb/swampup-demo/pull/1**
 
-The [`apm-audit` CI gate](.github/workflows/ci.yml) — a reusable workflow
-published by `zava-agent-config` — fails on `required-packages`. The `main`
-branch stays green; the violating PR cannot merge. Governance is not a
-document, it is a **check**.
+The [`apm-audit` CI gate](.github/workflows/ci.yml) — a reusable workflow published by
+`zava-agent-config` — fails on `required-packages`. The `main` branch stays green; the
+violating PR cannot merge. Governance is not a document, it is a **check**.
 
 ### Hand-off to JFrog
 
@@ -246,7 +238,7 @@ manifest, same lockfile, your registry.
 | 7a | Poison blocked | `apm install …/poisoned-tracing-skill` | fail-closed, hidden Unicode |
 | 7b | Deep scan (SkillSpector) | `apm audit --file "$POISON" --external skillspector` | NVIDIA SkillSpector merged, injection intent named |
 | 8 | Unapproved source | `apm install danielmeppiel/unapproved-skill` | allow-list violation |
-| 9 | Policy on a PR | drop baseline → open PR | CI red on `required-packages` |
+| 9 | Policy on a PR | open standing PR #1 (pre-staged) | CI red on `required-packages` |
 | 10 | Pack → JFrog hand-off | `apm pack --archive` | one portable `.zip`, lockfile embedded, installs anywhere |
 
 ## The moving parts
