@@ -212,7 +212,7 @@ document, it is a **check**.
 
 ```bash
 cd "$DEMO"
-apm pack --archive -o ./dist
+apm pack --archive
 ```
 
 Everything the manifest resolved — agents, instructions, skills — collapses into a
@@ -221,7 +221,7 @@ integrity verification. APM even prints `Share with: apm install <zip>`, because
 bundle installs anywhere APM runs:
 
 ```bash
-apm install dist/swampup-demo-0.1.0.zip     # deploys the whole bundle into a fresh project
+apm install build/swampup-demo-0.1.0.zip    # deploys the whole bundle into a fresh project
 ```
 
 That single artifact is the hand-off: **Yonatan takes this same bundle into JFrog
