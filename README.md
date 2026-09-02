@@ -37,6 +37,17 @@ export POISON=~/Repos/poisoned-tracing-skill/.apm/skills/tracing-helper/SKILL.md
 
 ---
 
+## Two ways to drive it
+
+Either **paste each beat** below, or run the scripted teleprompter
+**[`keynote-demo.sh`](keynote-demo.sh)** — the same 10 beats, advanced with **ENTER**
+(the command types itself, you talk, ENTER runs it). It's built for a single mirrored
+screen, where notes can't hide on a second display. One-time: `brew install pv`; then
+`./keynote-demo.sh` (see [`DEMO-COMMANDS.md`](DEMO-COMMANDS.md) for flags). Everything
+below is exactly what it runs.
+
+---
+
 ## The demo beats
 
 ### Portability

@@ -32,6 +32,29 @@ apm experimental enable external-scanners
 
 ---
 
+## Two ways to drive the demo
+
+**1 · Paste each beat** from the blocks below (fully self-contained).
+
+**2 · Teleprompter mode — [`keynote-demo.sh`](keynote-demo.sh).** Runs the *exact same* 10 beats as a
+scripted runner — ideal on a single mirrored screen, where notes can't hide on a second display. You
+never type or memorise a command; the room sees only a clean prompt and real output.
+
+```bash
+brew install pv                      # one-time: powers the live-typing effect
+cd "$DEMO" && ./keynote-demo.sh      # then just press ENTER through the beats
+```
+
+Rhythm per beat: **ENTER** → the command types itself → *(you talk)* → **ENTER** → it runs.
+- `./keynote-demo.sh -w3` — rehearse hands-free (auto-advance every 3s) · `-d` — no typing effect
+- Beats 7a & 8 exit non-zero *on purpose* (they're blocks) — the script keeps going.
+- `mkdir`/`cd` plumbing for scratch projects runs hidden, so only the `apm …` command shows;
+  Beat 9 opens the standing red PR in your browser.
+
+Needs §0 first. Uses the vendored `demo-magic.sh` (MIT © Paxton Hare, see `demo-magic.license.txt`).
+
+---
+
 ## PORTABILITY
 
 ### Beat 1 — install one skill, pinned to an exact version
