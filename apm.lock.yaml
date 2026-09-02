@@ -1,12 +1,12 @@
 lockfile_version: '2'
-generated_at: '2026-08-27T16:26:16.671756+00:00'
-apm_version: 0.27.0
+generated_at: '2026-09-02T09:15:33.500529+00:00'
+apm_version: 0.29.0
 dependencies:
 - repo_url: devexpgbb/swampup-skills
   materialization_repo_url: DevExpGbb/swampup-skills
   name: otel-tracing
   host: github.com
-  resolved_commit: 4c0d832ef95f6884b872250640c0e27b09bacab7
+  resolved_commit: 2cbb03c3de095e30357dfbd4391f7fe57ab876a1
   resolved_ref: v1.1.0
   version: 1.1.0
   virtual_path: plugins/otel-tracing
@@ -20,10 +20,10 @@ dependencies:
   deployed_file_hashes:
     .agents/skills/otel-tracing/SKILL.md: sha256:c099aac0652b2ea8fd2baa50bf4f02cebbb8335b88873565582cd06b6eda577e
     .claude/skills/otel-tracing/SKILL.md: sha256:c099aac0652b2ea8fd2baa50bf4f02cebbb8335b88873565582cd06b6eda577e
-  content_hash: sha256:c6eb686440c1dc4348755b245d3a482053bdb3d94502fee2a5750ebf50d721b6
+  content_hash: sha256:96abffdec3e7ebe8a3c5a558945a702f3da88cfc1f80ec30381bf2be77bd302e
   constraint: ^1.0.0
   resolved_tag: v1.1.0
-  resolved_at: '2026-08-27T16:26:15+00:00'
+  resolved_at: '2026-09-02T09:15:31+00:00'
   declared_license: MIT
 - repo_url: devexpgbb/zava-agent-config
   materialization_repo_url: DevExpGbb/zava-agent-config
@@ -49,7 +49,7 @@ dependencies:
     .github/agents/security.agent.md: sha256:8092bef9ff98c66251754d33e9b241f4f25293578b31e258cee88124c80590c1
     .github/instructions/docs-style-guide.instructions.md: sha256:cad1b1161ef8d53e08038302b6c8cd14dbc03f75fa7ec267edf3d1f07824a739
     .github/instructions/secure-coding-base.instructions.md: sha256:f0a32226b87082a4e4cad08a070e55c177e23e0ef728329973634c84c3a81d14
-  content_hash: sha256:fe41c6580b23ea9c7645d1824b8980fa5502831a8515812543962d46e68bc2f0
+  content_hash: sha256:4e552b21241a3213badf335836012ea43f1e0e1eaeb10a89561ea19361b4546b
   declared_license: MIT
 deployments:
 - kind: project-relative

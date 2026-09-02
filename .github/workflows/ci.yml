@@ -23,3 +23,7 @@ jobs:
   apm-audit:
     name: APM audit (supply-chain gate)
     uses: DevExpGbb/zava-agent-config/.github/workflows/apm-audit.yml@v6.3.0
+    # Pin the audit CLI to the same apm the demo runs live (0.29.0), which also
+    # generated apm.lock.yaml. Keeps CI hashing identical to the committed lock.
+    with:
+      apm-version: "0.29.0"
