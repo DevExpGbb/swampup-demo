@@ -25,6 +25,11 @@ apm experimental enable external-scanners
 [ -f "$POISON" ] && echo "PRE-FLIGHT OK" || echo "POISON MISSING — check clone"
 ```
 
+> **Go-live state = §0 done + beats un-run** (i.e. the **Level A** reset below). Run §0 once
+> *ahead of time* — it clones a repo and installs `skillspector` over the network, which you never
+> want to do on conference WiFi. Do **not** run the Level B full teardown before presenting; that
+> removes §0's setup and forces the slow re-clone/re-install. Level B is for **after** the event only.
+
 ---
 
 ## PORTABILITY
@@ -125,7 +130,8 @@ apm install "$DEMO/build/swampup-demo-0.1.0.zip" --target copilot,claude
 ## Reset — two levels
 
 **A · Between rehearsals** (fast; keeps §0's clone + tool + flag so you can re-run beats immediately).
-Undoes everything the *beats* touched — the consumer repo (Beats 2/8/10) and every scratch project:
+This is also your **go-live state**: §0 done, beats un-run. Undoes everything the *beats* touched —
+the consumer repo (Beats 2/8/10) and every scratch project:
 ```bash
 cd "$DEMO" && git checkout -- . && git clean -fd >/dev/null 2>&1   # restore all tracked + deployed files
 rm -rf "$DEMO"/build "$DEMO"/.github/plugin "$DEMO"/.claude-plugin  # apm pack artifacts (gitignored)
